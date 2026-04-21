@@ -24,7 +24,7 @@ def spara_highscore(highscore_lista, filnamn="highscore.json"):
 # === SPELMECKANIK ===
 
 def spela_omgang():
-    hemligt_tal = rand.randint(1,100)
+    hemligt_tal = random.randint(1,100)
     antal = 0
 
     while True:
@@ -36,7 +36,7 @@ def spela_omgang():
         elif gissa > hemligt_tal:
             print("För högt!")
         else:
-            print(f"Rätt! Du klarade spelar i {antal} gissningar.")
+            print(f"Rätt! Du klarade spelet på {antal} gissningar.")
             return antal
 
 
@@ -59,26 +59,29 @@ def visa_highscore(highscore_lista):
 # === HUVUDPROGRAM ===
 
 def huvudprogram():
-    """
-    Huvudprogrammet som styr menyn och programflödet.
-    """
-    # TODO: Implementera huvudprogrammet
-    # 1. Ladda highscore med ladda_highscore()
-    # 2. Skapa en while-loop som visar menyn
-    # 3. Menyn ska ha alternativen:
-    #    1. Spela ny omgång
-    #    2. Visa highscore
-    #    3. Avsluta
-    # 4. Vid val 1:
-    #    - Anropa spela_omgang() för att få antalet gissningar
-    #    - Fråga efter spelarens namn
-    #    - Skapa en dictionary {"namn": namn, "gissningar": antal}
-    #    - Lägg till i highscore-listan
-    #    - Spara med spara_highscore()
-    # 5. Vid val 2: anropa visa_highscore()
-    # 6. Vid val 3: avsluta loopen
-    pass
+    highscore = ladda_highscore()
 
+    while True:
+        print("\n--- HÖGT / LÅGT ---")
+        print("1. Spela ny omgång")
+        print("2 Visa highscore")
+        print("3. Avsluta")
+
+        val = input("Välj: ")
+
+        if val == "1":
+            antal = spela_omgang()
+            namn = input("Skriv ditt namn")
+
+            spelare = {"namn": namn, "gissningar": antal}
+            highscore.append(spelare)
+            spara_highscore(highscore)
+        elif val == "2":
+            visa_highscore(highscore)
+        elif val == "3":
+            break
+        else:
+            print("Ogiltigt val!")
 
 # Starta programmet om filen körs direkt
 if __name__ == "__main__":
